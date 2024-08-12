@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class SessionsClient {
+public class SessionsService {
 
     @Autowired
     private SessionRepository sessionRepository;
