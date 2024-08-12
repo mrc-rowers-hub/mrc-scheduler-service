@@ -1,9 +1,6 @@
 package com.codeaddi.scheduler_service.controller.db;
 
 import com.codeaddi.scheduler_service.testUtils.TestData;
-import com.codeaddi.scheduler_service.model.enums.RowerLevel;
-import com.codeaddi.scheduler_service.model.enums.SessionType;
-import com.codeaddi.scheduler_service.model.enums.Squad;
 import com.codeaddi.scheduler_service.model.repository.Session;
 import com.codeaddi.scheduler_service.model.repository.SessionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +28,13 @@ public class SessionsClientTests {
     SessionRepository sessionRepository;
 
     @InjectMocks
-    SessionsService sessionsClient;
+    SessionsService sessionsService;
 
     @Test
     void getAllSessions_infoInDb_returnsAllSessions(){
         when(sessionRepository.findAll()).thenReturn(TestData.listOfSessions);
 
-        List<Session> actual = sessionsClient.getAllSessions();
+        List<Session> actual = sessionsService.getAllSessions();
 
         assertThat(TestData.listOfSessions.equals(actual));
     }
@@ -49,7 +45,7 @@ public class SessionsClientTests {
 
         when(sessionRepository.findById(1L)).thenReturn(Optional.of(expected));
 
-        Session actual = sessionsClient.findById(1L);
+        Session actual = sessionsService.findById(1L);
 
         assertThat(expected.equals(actual));
     }
@@ -58,21 +54,21 @@ public class SessionsClientTests {
     void findById_infoNotInDb_throwsException(){
         when(sessionRepository.findById(3L)).thenReturn(java.util.Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> sessionsClient.findById(3L));
+        assertThrows(EntityNotFoundException.class, () -> sessionsService.findById(3L));
     }
 
     @Test()
     void replaceSession_sessionNotAlreadyInDb_throwsException(){
         when(sessionRepository.findById(3L)).thenReturn(java.util.Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> sessionsClient.replaceSession(TestData.unknownSession));
+        assertThrows(EntityNotFoundException.class, () -> sessionsService.replaceSession(TestData.unknownSession));
     }
 
     @Test()
     void replaceSession_sessionAlreadyInDb_replacesSession(){
         when(sessionRepository.findById(3L)).thenReturn(java.util.Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> sessionsClient.replaceSession(TestData.unknownSession));
+        assertThrows(EntityNotFoundException.class, () -> sessionsService.replaceSession(TestData.unknownSession));
     }
 
 }
