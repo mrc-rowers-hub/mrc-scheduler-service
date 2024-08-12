@@ -4,15 +4,18 @@ import com.codeaddi.scheduler_service.model.enums.RowerLevel;
 import com.codeaddi.scheduler_service.model.enums.SessionType;
 import com.codeaddi.scheduler_service.model.enums.Squad;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "sessions")
 @ToString
+@EqualsAndHashCode
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Session {
 
   @Id
