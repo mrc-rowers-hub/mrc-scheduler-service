@@ -1,5 +1,6 @@
 package com.codeaddi.scheduler_service.controller;
 
+import com.codeaddi.scheduler_service.controller.db.SessionsClient;
 import com.codeaddi.scheduler_service.model.repository.Session;
 import com.codeaddi.scheduler_service.model.repository.SessionRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +18,12 @@ import java.util.List;
 public class SessionController {
 
     @Autowired
-    private SessionRepository sessionRepository;
+    private SessionsClient sessionsClient;
 
     @GetMapping("/get_all_sessions")
     public ResponseEntity<List<Session>> getAllSessions(){
         log.info("Retrieving all sessions");
-        return ResponseEntity.ok(sessionRepository.findAll());
+        return ResponseEntity.ok(sessionsClient.getAllSessions());
     }
 
 }
