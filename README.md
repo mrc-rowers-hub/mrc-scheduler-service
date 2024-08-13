@@ -10,3 +10,4 @@ A web-based service to assist with scheduling for mersey rowing club.
 
 ## Database 
 - Flyway used for migration scripts 
+- An optional init script can be found in `src/main/resources/db/localScripts/insert_inits.sql`
