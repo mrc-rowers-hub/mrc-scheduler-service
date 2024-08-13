@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -79,8 +80,7 @@ public class SessionControllerTests {
         String requestBody = testUtils.convertSessionToJson(TestData.validSession);
         String expectedResponse = "{\"status\":\"SUCCESS\",\"message\":\"Session replaced\"}";
 
-        String actualResponse = RestAssuredMockMvc
-                .given()
+        String actualResponse = given()
                 .body(requestBody)
                 .contentType(ContentType.JSON)
                 .when()
@@ -102,8 +102,7 @@ public class SessionControllerTests {
         String requestBody = testUtils.convertSessionToJson(TestData.validSession);
         String expectedResponse = "{\"status\":\"SUCCESS_WITH_WARNING\",\"message\":\"Session not found, new session made\"}";
 
-        String actualResponse = RestAssuredMockMvc
-                .given()
+        String actualResponse = given()
                 .body(requestBody)
                 .contentType(ContentType.JSON)
                 .when()
@@ -115,6 +114,46 @@ public class SessionControllerTests {
         JSONAssert.assertEquals(expectedResponse, actualResponse, false);
 
         verify(sessionsService, times(1)).addSession(any(Session.class));
+
+    }
+
+    @Test
+    void deleteSession_sessionExists_returnsSuccessResponse() throws JSONException {
+        doNothing().when(sessionsService).deleteSession(TestData.validId);
+
+        String actualResponse = given()
+                .param("sessionId", TestData.validId)
+                .contentType(ContentType.JSON)
+                .when()
+                .delete("/standard_sessions/delete_session")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract().body().asString();
+
+        String expectedResponse = "{\"status\":\"SUCCESS\",\"message\":\"Session deleted\"}";
+        JSONAssert.assertEquals(expectedResponse, actualResponse, false);
+
+        verify(sessionsService, times(1)).deleteSession(TestData.validId);
+
+    }
+
+    @Test
+    void deleteSession_sessionDoesNotExist_returnsBadRequestResponse() throws JSONException {
+        doThrow(new EntityNotFoundException("Session not found")).when(sessionsService).deleteSession(TestData.unknownId);
+
+        String actualResponse = given()
+                .param("sessionId", TestData.unknownId)
+                .contentType(ContentType.JSON)
+                .when()
+                .delete("/standard_sessions/delete_session")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .extract().body().asString();
+
+        String expectedResponse = "{\"status\":\"ERROR\",\"message\":\"Session not found, nothing to delete\"}";
+        JSONAssert.assertEquals(expectedResponse, actualResponse, false);
+
+        verify(sessionsService, times(1)).deleteSession(TestData.unknownId);
 
     }
 

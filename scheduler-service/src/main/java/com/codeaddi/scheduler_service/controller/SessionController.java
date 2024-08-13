@@ -35,7 +35,7 @@ public class SessionController {
 
     @PutMapping("/update_session")
     public ResponseEntity<StandardResponse> updateSession(@RequestBody Session newSession){
-        log.info("UPDATE REQUEST RECEIVED");
+        log.info("UPDATE SESSION REQUEST RECEIVED");
 
         try{
             sessionsService.replaceSession(newSession);
@@ -47,6 +47,17 @@ public class SessionController {
         }
     }
 
-// delete session
 
+    @DeleteMapping("/delete_session")
+    public ResponseEntity<StandardResponse> deleteSession(@RequestParam Long sessionId){
+        log.info("DELETE SESSION REQUEST RECEIVED");
+
+        try{
+            sessionsService.deleteSession(sessionId);
+            return ResponseEntity.ok().body(StandardResponse.builder().status(Status.SUCCESS).message("Session deleted").build());
+        } catch(EntityNotFoundException e){
+            log.error("Session with id {} not found, nothing to delete", sessionId);
+            return ResponseEntity.badRequest().body(StandardResponse.builder().status(Status.ERROR).message("Session not found, nothing to delete").build());
+        }
+    }
 }
