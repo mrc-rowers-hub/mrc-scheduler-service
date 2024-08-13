@@ -21,9 +21,16 @@ public class SessionController {
     private SessionsService sessionsService;
 
     @GetMapping("/get_all_sessions")
-    public ResponseEntity<List<Session>> getAllSessions(){
+    public ResponseEntity<?> getAllSessions(){
         log.info("Retrieving all sessions");
-        return ResponseEntity.ok(sessionsService.getAllSessions());
+
+        List<Session> allSessions = sessionsService.getAllSessions();
+
+        if(allSessions.isEmpty()){
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(sessionsService.getAllSessions());
+        }
     }
 
     @PutMapping("/update_session")
@@ -36,7 +43,7 @@ public class SessionController {
         } catch(EntityNotFoundException e){
             log.error("Session with id {} not found, creating new session", newSession.getId());
             sessionsService.addSession(newSession);
-            return ResponseEntity.badRequest().body(StandardResponse.builder().status(Status.SUCCESS_WITH_WARNING).message("Session not found, new session made").build());
+            return ResponseEntity.ok().body(StandardResponse.builder().status(Status.SUCCESS_WITH_WARNING).message("Session not found, new session made").build());
         }
     }
 

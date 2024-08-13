@@ -1,5 +1,6 @@
 package com.codeaddi.scheduler_service.testUtils;
 
+import com.codeaddi.scheduler_service.model.http.StandardResponse;
 import com.codeaddi.scheduler_service.model.repository.Session;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,4 +21,15 @@ public class TestUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public String convertSessionToJson(Session session)  {
+        mapper.registerModule(new JavaTimeModule());
+
+        try {
+            return mapper.writeValueAsString(session);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
