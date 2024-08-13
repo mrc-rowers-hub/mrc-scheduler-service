@@ -4,9 +4,8 @@ import com.codeaddi.scheduler_service.model.enums.RowerLevel;
 import com.codeaddi.scheduler_service.model.enums.SessionType;
 import com.codeaddi.scheduler_service.model.enums.Squad;
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalTime;
+import lombok.*;
 
 @Entity
 @Table(name = "sessions")

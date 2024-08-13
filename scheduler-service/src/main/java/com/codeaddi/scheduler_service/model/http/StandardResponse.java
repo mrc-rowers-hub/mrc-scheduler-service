@@ -11,6 +11,6 @@ import lombok.extern.jackson.Jacksonized;
 @AllArgsConstructor
 @Jacksonized
 public class StandardResponse {
-    private Status status;
-    private String message;
+  private Status status;
+  private String message;
 }
