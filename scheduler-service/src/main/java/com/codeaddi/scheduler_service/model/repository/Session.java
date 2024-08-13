@@ -5,9 +5,16 @@ import com.codeaddi.scheduler_service.model.enums.SessionType;
 import com.codeaddi.scheduler_service.model.enums.Squad;
 import jakarta.persistence.*;
 import java.time.LocalTime;
+import lombok.*;
 
 @Entity
 @Table(name = "sessions")
+@ToString
+@EqualsAndHashCode
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Session {
 
   @Id
