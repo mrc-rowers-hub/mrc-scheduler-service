@@ -41,5 +41,14 @@ public class SessionsService {
         sessionRepository.save(newSession);
     }
 
+    public void deleteSession(Long sessionId){
+        log.info("Deleting session with ID: ");
+
+        if (!sessionRepository.existsById(sessionId)) {
+            throw new EntityNotFoundException("Session with id " + sessionId + " not found");
+        }
+        sessionRepository.deleteById(sessionId);
+    }
+
 
 }

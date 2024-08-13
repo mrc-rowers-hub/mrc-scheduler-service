@@ -12,18 +12,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-public class SessionsClientTests {
+public class SessionsServiceTests {
 
     @Mock
     SessionRepository sessionRepository;
@@ -68,6 +66,30 @@ public class SessionsClientTests {
         assert deletedSessionId.equals(TestData.validId);
 
         verify(sessionRepository).save(TestData.validSessionReplacement);
+    }
+
+    @Test()
+    void deleteSession_sessionInDb_deletesSession(){
+        when(sessionRepository.existsById(TestData.unknownId)).thenReturn(true);
+
+        sessionsService.deleteSession(TestData.unknownId);
+
+        verify(sessionRepository, times(1)).deleteById(TestData.unknownId);
+
+    }
+
+    @Test
+    void deleteSession_sessionDoesNotExist_throwsEntityNotFoundException() {
+
+        when(sessionRepository.existsById(TestData.unknownId)).thenReturn(false);
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+            sessionsService.deleteSession(TestData.unknownId);
+        });
+
+        assertEquals("Session with id " + TestData.unknownId + " not found", exception.getMessage());
+
+        verify(sessionRepository, never()).deleteById(TestData.unknownId);
     }
 
 }
