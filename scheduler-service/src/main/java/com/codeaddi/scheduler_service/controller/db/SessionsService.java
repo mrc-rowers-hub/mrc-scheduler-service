@@ -40,7 +40,7 @@ public class SessionsService {
   }
 
   public void deleteSession(Long sessionId) {
-    log.info("Deleting session with ID: ");
+    log.info("Deleting session with ID: " + sessionId);
 
     if (!sessionRepository.existsById(sessionId)) {
       throw new EntityNotFoundException("Session with id " + sessionId + " not found");
