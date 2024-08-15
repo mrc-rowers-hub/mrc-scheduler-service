@@ -18,7 +18,6 @@ public class StoredProcedureHandler {
     @Transactional
     public void updateUpcomingSessions(java.sql.Date startDate) {
 
-        // Call the stored procedure with the converted date
         upcomingSessionsRepository.callInsertUpcomingSessions(startDate);
 
         log.info("Added upcoming sessions starting from " + startDate);
@@ -26,12 +25,9 @@ public class StoredProcedureHandler {
     }
 
     @Transactional
-    public void initAddFourWeeksOfUpcomingSessions(Long sessionId) { // call this one on the add or update endpoint
+    public void initAddFourWeeksOfUpcomingSessions(Long sessionId) {
         upcomingSessionsRepository.initUpcomingFourWeeksForSession(sessionId);
         log.info("Populated 4 weeks of upcoming availability for session {}", sessionId);
     }
-
-    // need something to delete these too
-
 
 }
