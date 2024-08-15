@@ -1,8 +1,7 @@
 package com.codeaddi.scheduler_service.controller.db;
 
-import com.codeaddi.scheduler_service.model.repository.sessions.Session;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import com.codeaddi.scheduler_service.model.repository.sessions.SessionRepository;
-import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSessionsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

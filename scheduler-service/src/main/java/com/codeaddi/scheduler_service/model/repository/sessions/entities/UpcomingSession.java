@@ -1,4 +1,4 @@
-package com.codeaddi.scheduler_service.model.repository.sessions;
+package com.codeaddi.scheduler_service.model.repository.sessions.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,14 +6,14 @@ import lombok.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "past_sessions")
+@Table(name = "upcoming_sessions")
 @ToString
 @EqualsAndHashCode
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PastSession {
+public class UpcomingSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

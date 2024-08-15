@@ -1,8 +1,8 @@
 package com.codeaddi.scheduler_service.controller.db;
 
-import com.codeaddi.scheduler_service.model.repository.sessions.PastSession;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSession;
 import com.codeaddi.scheduler_service.model.repository.sessions.PastSessionsRepository;
-import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSession;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSession;
 import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSessionsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +50,8 @@ public class UpcomingSessionsService {
     public void removeUpcomingSessionsForRemovedSession(Long sessionId){
         upcomingSessionsRepository.deleteBySessionId(sessionId);
         log.info("Deleting upcoming sessions for removed ID {}", sessionId);
+
+        // and delete upcoming availability
     }
 
     private java.sql.Date todaysDate(){
