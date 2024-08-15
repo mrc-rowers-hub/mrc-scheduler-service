@@ -1,5 +1,6 @@
 package com.codeaddi.scheduler_service.model.repository.sessions;
 
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSessionAvailability;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,14 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UpcomingSessionsAvailabilityRepository extends JpaRepository<UpcomingSessionAvailability, Long> {
+public interface PastSessionsAvailabilityRepository extends JpaRepository<PastSessionAvailability, Long> {
 
-
-    @Modifying
-    @Query(value = "DELETE FROM upcoming_sessions WHERE upcoming_session_id = :upcomingSessionId", nativeQuery = true)
-    void deleteByUpcomingSessionId(@Param("upcomingSessionId") Long upcomingSessionId);
-
-    List<UpcomingSessionAvailability> findUpcomingSessionAvailabilitiesByUpcomingSessionId(Long upcomingSessionId);
 
 }
 

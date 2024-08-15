@@ -37,3 +37,7 @@ WHERE
     ) > CURDATE()
 ORDER BY
     s.session_id, next_date;
+
+INSERT INTO upcoming_session_availability
+(upcoming_session_id, rower_id)
+VALUES (1, 24);

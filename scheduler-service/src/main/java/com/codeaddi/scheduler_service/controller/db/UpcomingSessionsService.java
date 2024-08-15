@@ -1,13 +1,17 @@
 package com.codeaddi.scheduler_service.controller.db;
 
+import com.codeaddi.scheduler_service.model.repository.sessions.PastSessionsAvailabilityRepository;
 import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSessionsAvailabilityRepository;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSession;
 import com.codeaddi.scheduler_service.model.repository.sessions.PastSessionsRepository;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSessionAvailability;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSession;
 import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSessionsRepository;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,29 +27,53 @@ public class UpcomingSessionsService {
     UpcomingSessionsAvailabilityRepository upcomingSessionsAvailabilityRepository;
 
     @Autowired
+    PastSessionsAvailabilityRepository pastSessionsAvailabilityRepository;
+
+    @Autowired
     PastSessionsRepository pastSessionsRepository;
 
     @Autowired
     StoredProcedureHandler storedProcedureHandler;
 
+    @Transactional
     public void addNewWeekOfUpcomingSessions(){
-        moveOldSessions();
+        List<UpcomingSession> oldSessions = moveOldSessions();
+        moveOldAvailabilities(oldSessions);
 
         storedProcedureHandler.updateUpcomingSessions(todaysDate());
     }
 
-    private void moveOldSessions(){
+
+    private List<UpcomingSession> moveOldSessions(){
         List<UpcomingSession> pastSessions = upcomingSessionsRepository.findAllByDateBefore(todaysDate());
 
         for(UpcomingSession upcomingSession : pastSessions){
-            PastSession pastSession = PastSession.builder().upcomingSessionId(upcomingSession.getUpcomingSessionId()).sessionId(upcomingSession.getSessionId()).date(upcomingSession.getDate()).build();
+            Long upcomingSessionId = upcomingSession.getUpcomingSessionId();
+            PastSession pastSession = PastSession.builder().upcomingSessionId(upcomingSessionId).sessionId(upcomingSession.getSessionId()).date(upcomingSession.getDate()).build();
             pastSessionsRepository.save(pastSession);
-            log.info("Upcoming session {} moved to past sessions", upcomingSession.getUpcomingSessionId());
+            log.info("Upcoming session {} moved to past sessions", upcomingSessionId);
 
             upcomingSessionsRepository.delete(upcomingSession);
-            log.info("Removed upcoming session {} from upcoming sessions",upcomingSession.getUpcomingSessionId() );
+            log.info("Removed upcoming session {} from upcoming sessions",upcomingSessionId );
+        }
 
-            upcomingSessionsAvailabilityRepository.deleteBySessionId(upcomingSession.getUpcomingSessionId());
+return pastSessions;    }
+
+    private void moveOldAvailabilities(List<UpcomingSession> pastSessions){
+        for(UpcomingSession upcomingSession : pastSessions){
+            Long upcomingSessionId = upcomingSession.getUpcomingSessionId();
+
+            List<UpcomingSessionAvailability> upcomingSessionAvailabilities = upcomingSessionsAvailabilityRepository.findUpcomingSessionAvailabilitiesByUpcomingSessionId(upcomingSessionId);
+
+            for(UpcomingSessionAvailability upcomingSessionAvailability : upcomingSessionAvailabilities){
+                PastSessionAvailability pastSessionAvailability = PastSessionAvailability.builder().upcomingSessionId(upcomingSessionAvailability.getUpcomingSessionId()).rowerId(upcomingSessionAvailability.getRowerId()).build();
+                pastSessionsAvailabilityRepository.save(pastSessionAvailability);
+                log.info("Upcoming session availability {} moved to past sessions", upcomingSessionAvailability.getId());
+            }
+
+            upcomingSessionsAvailabilityRepository.deleteByUpcomingSessionId(upcomingSessionId);
+            log.info("Removed upcoming availabilities {} from upcoming availabilities", upcomingSessionId );
+
         }
     }
 
@@ -59,7 +87,7 @@ public class UpcomingSessionsService {
         upcomingSessionsRepository.deleteBySessionId(sessionId);
         log.info("Deleting upcoming sessions for removed ID {}", sessionId);
 
-        upcomingSessionsAvailabilityRepository.deleteBySessionId(upcomingSessionIdToRemove);
+        upcomingSessionsAvailabilityRepository.deleteByUpcomingSessionId(upcomingSessionIdToRemove);
     }
 
     private java.sql.Date todaysDate(){
