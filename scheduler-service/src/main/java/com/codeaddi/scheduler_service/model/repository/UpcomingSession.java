@@ -18,10 +18,10 @@ public class UpcomingSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "upcoming_session_id")
-    private Integer upcomingSessionId;
+    private Long upcomingSessionId;
 
     @Column(name = "session_id", nullable = false)
-    private Integer sessionId;
+    private Long sessionId;
 
     @Column(name = "date", nullable = false)
     @Temporal(TemporalType.DATE)
