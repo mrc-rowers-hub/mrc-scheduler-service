@@ -16,13 +16,12 @@ public class StoredProcedureHandler {
     UpcomingSessionsRepository upcomingSessionsRepository;
 
     @Transactional
-    public void updateUpcomingSessions(Date startDate) {
-        java.sql.Date sqlStartDate = new java.sql.Date(startDate.getTime());
+    public void updateUpcomingSessions(java.sql.Date startDate) {
 
         // Call the stored procedure with the converted date
-        upcomingSessionsRepository.callInsertUpcomingSessions(sqlStartDate);
+        upcomingSessionsRepository.callInsertUpcomingSessions(startDate);
 
-        log.info("Added upcoming sessions starting from " + sqlStartDate);
+        log.info("Added upcoming sessions starting from " + startDate);
 
     }
 

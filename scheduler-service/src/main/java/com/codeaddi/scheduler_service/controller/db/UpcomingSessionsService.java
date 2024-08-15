@@ -8,8 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -28,11 +27,11 @@ public class UpcomingSessionsService {
     public void addNewWeekOfUpcomingSessions(){
         moveOldSessions();
 
-        storedProcedureHandler.updateUpcomingSessions(Date.from(Instant.now()));
+        storedProcedureHandler.updateUpcomingSessions(todaysDate());
     }
 
     private void moveOldSessions(){
-        List<UpcomingSession> pastSessions = upcomingSessionsRepository.findAllPastSessions();
+        List<UpcomingSession> pastSessions = upcomingSessionsRepository.findAllByDateBefore(todaysDate());
 
         for(UpcomingSession upcomingSession : pastSessions){
             PastSession pastSession = PastSession.builder().upcomingSessionId(upcomingSession.getUpcomingSessionId()).sessionId(upcomingSession.getSessionId()).date(upcomingSession.getDate()).build();
@@ -51,6 +50,11 @@ public class UpcomingSessionsService {
     public void removeUpcomingSessionsForRemovedSession(Long sessionId){
         upcomingSessionsRepository.deleteBySessionId(sessionId);
         log.info("Deleting upcoming sessions for removed ID {}", sessionId);
+    }
+
+    private java.sql.Date todaysDate(){
+        LocalDate today = LocalDate.now();
+        return java.sql.Date.valueOf(today);
     }
 
 }

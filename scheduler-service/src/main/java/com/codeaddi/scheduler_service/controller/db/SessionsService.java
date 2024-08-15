@@ -8,6 +8,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -15,8 +16,6 @@ public class SessionsService {
 
   @Autowired private SessionRepository sessionRepository;
   @Autowired private UpcomingSessionsService upcomingSessionsService;
-    @Autowired
-    private UpcomingSessionsRepository upcomingSessionsRepository;
 
   public List<Session> getAllSessions() {
     return sessionRepository.findAll();
@@ -26,6 +25,7 @@ public class SessionsService {
     return sessionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
   }
 
+  @Transactional
   public void replaceSession(Session newSession) {
     Session existingSession = findById(newSession.getId());
 
@@ -33,13 +33,14 @@ public class SessionsService {
 
     sessionRepository.deleteById(existingSession.getId());
 
-upcomingSessionsRepository.deleteBySessionId(existingSession.getId());
+    upcomingSessionsService.removeUpcomingSessionsForRemovedSession(existingSession.getId());
     log.info("Adding new session: {}", newSession);
     sessionRepository.save(newSession);
 
     upcomingSessionsService.initAddFourWeeksOfUpcomingSessions(newSession.getId());
   }
 
+  @Transactional
   public void addSession(Session newSession) {
     log.info("Adding new session: {}", newSession);
 
@@ -48,6 +49,7 @@ upcomingSessionsRepository.deleteBySessionId(existingSession.getId());
     upcomingSessionsService.initAddFourWeeksOfUpcomingSessions(newSession.getId());
   }
 
+  @Transactional
   public void deleteSession(Long sessionId) {
     log.info("Deleting session with ID: " + sessionId);
 
@@ -56,6 +58,6 @@ upcomingSessionsRepository.deleteBySessionId(existingSession.getId());
     }
     sessionRepository.deleteById(sessionId);
 
-    upcomingSessionsRepository.deleteBySessionId(sessionId);
+    upcomingSessionsService.removeUpcomingSessionsForRemovedSession(sessionId);
   }
 }
