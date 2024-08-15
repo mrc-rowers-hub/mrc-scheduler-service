@@ -37,6 +37,10 @@ public class UpcomingSessionsService {
     storedProcedureHandler.updateUpcomingSessions(todaysDate());
   }
 
+  public List<UpcomingSession> getAllUpcomingSessions(){
+    return upcomingSessionsRepository.findAll();
+  }
+
   private List<UpcomingSession> moveOldSessions() {
     List<UpcomingSession> pastSessions =
         upcomingSessionsRepository.findAllByDateBefore(todaysDate());
