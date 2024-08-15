@@ -1,6 +1,6 @@
 package com.codeaddi.scheduler_service.controller.db;
 
-import com.codeaddi.scheduler_service.model.repository.UpcomingSessionsRepository;
+import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSessionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

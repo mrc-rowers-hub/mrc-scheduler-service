@@ -1,6 +1,6 @@
 package com.codeaddi.scheduler_service.testUtils;
 
-import com.codeaddi.scheduler_service.model.repository.Session;
+import com.codeaddi.scheduler_service.model.repository.sessions.Session;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

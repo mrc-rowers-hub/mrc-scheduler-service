@@ -5,7 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import com.codeaddi.scheduler_service.controller.db.SessionsService;
-import com.codeaddi.scheduler_service.model.repository.Session;
+import com.codeaddi.scheduler_service.model.repository.sessions.Session;
 import com.codeaddi.scheduler_service.testUtils.TestData;
 import com.codeaddi.scheduler_service.testUtils.TestUtils;
 import io.restassured.http.ContentType;
