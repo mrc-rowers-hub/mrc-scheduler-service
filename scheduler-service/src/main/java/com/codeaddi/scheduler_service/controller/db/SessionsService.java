@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class SessionsService {
 
   @Autowired private SessionRepository sessionRepository;
+  @Autowired private UpcomingSessionsService upcomingSessionsService;
 
   public List<Session> getAllSessions() {
     return sessionRepository.findAll();
@@ -29,14 +30,20 @@ public class SessionsService {
 
     sessionRepository.deleteById(existingSession.getId());
 
+    // todo delete the old session
+
     log.info("Adding new session: {}", newSession);
     sessionRepository.save(newSession);
+
+    upcomingSessionsService.initAddFourWeeksOfUpcomingSessions(newSession.getId());
   }
 
   public void addSession(Session newSession) {
     log.info("Adding new session: {}", newSession);
 
     sessionRepository.save(newSession);
+
+    upcomingSessionsService.initAddFourWeeksOfUpcomingSessions(newSession.getId());
   }
 
   public void deleteSession(Long sessionId) {

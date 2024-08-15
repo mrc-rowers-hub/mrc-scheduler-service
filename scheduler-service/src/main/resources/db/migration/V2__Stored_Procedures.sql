@@ -2,11 +2,8 @@
 SET SQL_SAFE_UPDATES = 0;
 
 DELIMITER //
-CREATE PROCEDURE insert_upcoming_sessions()
+CREATE PROCEDURE insert_upcoming_sessions_by_id(IN p_session_id INT)
 BEGIN
-  -- Clear existing entries in upcoming_sessions safely
-DELETE FROM upcoming_sessions
-WHERE upcoming_session_id IS NOT NULL;
 
 -- Insert the next four upcoming dates for each session day starting from today
 INSERT INTO upcoming_sessions (session_id, date)
@@ -43,6 +40,7 @@ WHERE
                     WHEN 'SUNDAY' THEN '2024-01-07'
                 END) - WEEKDAY(CURDATE())) % 7 + (i*7) DAY
         ) > CURDATE()
+    AND s.session_id = p_session_id
 ORDER BY
     s.session_id, next_date;
 END //

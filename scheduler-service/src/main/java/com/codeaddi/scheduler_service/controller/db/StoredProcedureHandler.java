@@ -27,9 +27,12 @@ public class StoredProcedureHandler {
     }
 
     @Transactional
-    public void initAddFourWeeksOfUpcomingSessions() {
-        upcomingSessionsRepository.initUpcomingFourWeeks();
+    public void initAddFourWeeksOfUpcomingSessions(Long sessionId) { // call this one on the add or update endpoint
+        upcomingSessionsRepository.initUpcomingFourWeeksForSession(sessionId);
+        log.info("Populated 4 weeks of upcoming availability for session {}", sessionId);
     }
+
+    // need something to delete these too
 
 
 }

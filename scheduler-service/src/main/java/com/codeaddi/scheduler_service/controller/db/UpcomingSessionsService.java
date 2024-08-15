@@ -1,6 +1,5 @@
-package com.codeaddi.scheduler_service.controller.scheduledJobs;
+package com.codeaddi.scheduler_service.controller.db;
 
-import com.codeaddi.scheduler_service.controller.db.StoredProcedureHandler;
 import com.codeaddi.scheduler_service.model.repository.sessions.PastSession;
 import com.codeaddi.scheduler_service.model.repository.sessions.PastSessionsRepository;
 import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSession;
@@ -43,6 +42,10 @@ public class UpcomingSessionsService {
             upcomingSessionsRepository.delete(upcomingSession);
             log.info("Removed upcoming session {} from upcoming sessions",upcomingSession.getUpcomingSessionId() );
         }
+    }
+
+    public void initAddFourWeeksOfUpcomingSessions(Long sessionId){
+        storedProcedureHandler.initAddFourWeeksOfUpcomingSessions(sessionId);
     }
 
 }

@@ -18,8 +18,8 @@ public interface UpcomingSessionsRepository extends JpaRepository<UpcomingSessio
 
 
     @Modifying
-    @Query(value = "CALL insert_upcoming_sessions()", nativeQuery = true)
-    void initUpcomingFourWeeks();
+    @Query(value = "CALL insert_upcoming_sessions_by_id(:p_session_id)", nativeQuery = true)
+    void initUpcomingFourWeeksForSession(@Param("p_session_id") Long sessionId);
 
     //need a sproc for just adding four weeks worth for a certain session
 

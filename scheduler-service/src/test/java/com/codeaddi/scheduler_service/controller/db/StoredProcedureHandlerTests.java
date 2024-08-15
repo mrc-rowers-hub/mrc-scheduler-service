@@ -12,7 +12,7 @@ public class StoredProcedureHandlerTests {
 
     @Test
     void testing(){
-        storedProcedureHandler.initAddFourWeeksOfUpcomingSessions();
+        storedProcedureHandler.initAddFourWeeksOfUpcomingSessions(1L);
     }
 
 }
