@@ -1,5 +1,6 @@
 package com.codeaddi.scheduler_service.controller.db;
 
+import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSessionsAvailabilityRepository;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSession;
 import com.codeaddi.scheduler_service.model.repository.sessions.PastSessionsRepository;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSession;
@@ -17,6 +18,9 @@ public class UpcomingSessionsService {
 
     @Autowired
     UpcomingSessionsRepository upcomingSessionsRepository;
+
+    @Autowired
+    UpcomingSessionsAvailabilityRepository upcomingSessionsAvailabilityRepository;
 
     @Autowired
     PastSessionsRepository pastSessionsRepository;
@@ -40,6 +44,8 @@ public class UpcomingSessionsService {
 
             upcomingSessionsRepository.delete(upcomingSession);
             log.info("Removed upcoming session {} from upcoming sessions",upcomingSession.getUpcomingSessionId() );
+
+            upcomingSessionsAvailabilityRepository.deleteBySessionId(upcomingSession.getUpcomingSessionId());
         }
     }
 
@@ -48,10 +54,12 @@ public class UpcomingSessionsService {
     }
 
     public void removeUpcomingSessionsForRemovedSession(Long sessionId){
+        Long upcomingSessionIdToRemove = upcomingSessionsRepository.findAllBySessionId(sessionId).stream().findAny().get().getSessionId();
+
         upcomingSessionsRepository.deleteBySessionId(sessionId);
         log.info("Deleting upcoming sessions for removed ID {}", sessionId);
 
-        // and delete upcoming availability
+        upcomingSessionsAvailabilityRepository.deleteBySessionId(upcomingSessionIdToRemove);
     }
 
     private java.sql.Date todaysDate(){

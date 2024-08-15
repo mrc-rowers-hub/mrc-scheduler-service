@@ -26,6 +26,7 @@ public interface UpcomingSessionsRepository extends JpaRepository<UpcomingSessio
 
     List<UpcomingSession> findAllByDateBefore(Date date);
 
+    List<UpcomingSession> findAllBySessionId(Long sessionId);
 
     @Modifying
     @Query(value = "DELETE FROM upcoming_sessions WHERE session_id = :sessionId", nativeQuery = true)
