@@ -13,15 +13,14 @@ import lombok.*;
 @AllArgsConstructor
 public class UpcomingSessionAvailability {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
+  private Long id;
 
-    @Column(name = "upcoming_session_id", nullable = false)
-    private Long upcomingSessionId;
+  @Column(name = "upcoming_session_id", nullable = false)
+  private Long upcomingSessionId;
 
-    @Column(name = "rower_id", nullable = false)
-    private Long rowerId;
-
+  @Column(name = "rower_id", nullable = false)
+  private Long rowerId;
 }

@@ -7,12 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class StoredProcedureHandlerTests {
 
-    @Autowired
-    StoredProcedureHandler storedProcedureHandler;
+  @Autowired StoredProcedureHandler storedProcedureHandler;
 
-    @Test
-    void testing(){
-        storedProcedureHandler.initAddFourWeeksOfUpcomingSessions(1L);
-    }
-
+  @Test
+  void testing() {
+    storedProcedureHandler.initAddFourWeeksOfUpcomingSessions(1L);
+  }
 }

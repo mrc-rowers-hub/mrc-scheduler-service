@@ -8,12 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpcomingSessionsJobs {
 
-    @Autowired
-    UpcomingSessionsService upcomingSessionsService;
+  @Autowired UpcomingSessionsService upcomingSessionsService;
 
-    @Scheduled(cron = "0 0 23 * * SAT") // Every Saturday at 11 PM
-    public void addNewUpcomingSessions() {
-        upcomingSessionsService.addNewWeekOfUpcomingSessions();
-    }
-
+  @Scheduled(cron = "0 0 23 * * SAT") // Every Saturday at 11 PM
+  public void addNewUpcomingSessions() {
+    upcomingSessionsService.addNewWeekOfUpcomingSessions();
+  }
 }

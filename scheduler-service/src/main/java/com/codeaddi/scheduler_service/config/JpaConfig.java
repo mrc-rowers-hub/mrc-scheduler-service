@@ -7,6 +7,4 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.codeaddi.scheduler_service.model.repository")
-public class JpaConfig {
-}
-
+public class JpaConfig {}

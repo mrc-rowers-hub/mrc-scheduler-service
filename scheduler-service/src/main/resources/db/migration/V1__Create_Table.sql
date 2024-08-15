@@ -43,5 +43,3 @@ CREATE TABLE past_session_availability
     rower_id            INT NOT NULL
 );
 
--- also need a trigger for a delete/add on sessions, to update the upcoming_sessions and availability!
--- need a way to move any past sessions into an old table before the event to update_upcoming_sessions happens
