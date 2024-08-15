@@ -1,10 +1,12 @@
-package com.codeaddi.scheduler_service.model.repository;
+package com.codeaddi.scheduler_service.model.repository.sessions;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UpcomingSessionsRepository extends JpaRepository<UpcomingSession, Long> {
@@ -20,6 +22,10 @@ public interface UpcomingSessionsRepository extends JpaRepository<UpcomingSessio
     void initUpcomingFourWeeks();
 
     //need a sproc for just adding four weeks worth for a certain session
+
+    @Query("SELECT u FROM UpcomingSession u WHERE u.date < CURRENT_DATE")
+    List<UpcomingSession> findAllPastSessions();
+
 
 }
 
