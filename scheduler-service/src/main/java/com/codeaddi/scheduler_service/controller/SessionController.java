@@ -50,7 +50,7 @@ public class SessionController {
           .body(
               StandardResponse.builder()
                   .status(Status.SUCCESS_WITH_WARNING)
-                  .message("Session not found, new session made")
+                  .message("New session made")
                   .build());
     }
   }
