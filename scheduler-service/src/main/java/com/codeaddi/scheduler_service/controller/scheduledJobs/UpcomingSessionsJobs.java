@@ -16,4 +16,6 @@ public class UpcomingSessionsJobs {
         upcomingSessionsService.addNewWeekOfUpcomingSessions();
     }
 
+    // todo a job to move old availability to an archievy table
+
 }

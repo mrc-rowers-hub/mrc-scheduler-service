@@ -2,6 +2,7 @@ package com.codeaddi.scheduler_service.controller.db;
 
 import com.codeaddi.scheduler_service.model.repository.sessions.Session;
 import com.codeaddi.scheduler_service.model.repository.sessions.SessionRepository;
+import com.codeaddi.scheduler_service.model.repository.sessions.UpcomingSessionsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,8 @@ public class SessionsService {
 
   @Autowired private SessionRepository sessionRepository;
   @Autowired private UpcomingSessionsService upcomingSessionsService;
+    @Autowired
+    private UpcomingSessionsRepository upcomingSessionsRepository;
 
   public List<Session> getAllSessions() {
     return sessionRepository.findAll();
@@ -30,8 +33,7 @@ public class SessionsService {
 
     sessionRepository.deleteById(existingSession.getId());
 
-    // todo delete the old session
-
+upcomingSessionsRepository.deleteBySessionId(existingSession.getId());
     log.info("Adding new session: {}", newSession);
     sessionRepository.save(newSession);
 
@@ -53,5 +55,7 @@ public class SessionsService {
       throw new EntityNotFoundException("Session with id " + sessionId + " not found");
     }
     sessionRepository.deleteById(sessionId);
+
+    upcomingSessionsRepository.deleteBySessionId(sessionId);
   }
 }

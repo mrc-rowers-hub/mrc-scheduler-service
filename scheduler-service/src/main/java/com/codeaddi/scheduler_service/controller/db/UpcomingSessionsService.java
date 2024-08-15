@@ -48,4 +48,9 @@ public class UpcomingSessionsService {
         storedProcedureHandler.initAddFourWeeksOfUpcomingSessions(sessionId);
     }
 
+    public void removeUpcomingSessionsForRemovedSession(Long sessionId){
+        upcomingSessionsRepository.deleteBySessionId(sessionId);
+        log.info("Deleting upcoming sessions for removed ID {}", sessionId);
+    }
+
 }
