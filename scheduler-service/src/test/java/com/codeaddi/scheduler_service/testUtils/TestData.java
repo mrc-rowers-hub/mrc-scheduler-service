@@ -3,7 +3,7 @@ package com.codeaddi.scheduler_service.testUtils;
 import com.codeaddi.scheduler_service.model.enums.RowerLevel;
 import com.codeaddi.scheduler_service.model.enums.SessionType;
 import com.codeaddi.scheduler_service.model.enums.Squad;
-import com.codeaddi.scheduler_service.model.repository.Session;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import java.time.LocalTime;
 import java.util.List;
 

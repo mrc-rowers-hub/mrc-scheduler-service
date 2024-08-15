@@ -1,4 +1,4 @@
-package com.codeaddi.scheduler_service.model.repository;
+package com.codeaddi.scheduler_service.model.repository.sessions.entities;
 
 import com.codeaddi.scheduler_service.model.enums.RowerLevel;
 import com.codeaddi.scheduler_service.model.enums.SessionType;

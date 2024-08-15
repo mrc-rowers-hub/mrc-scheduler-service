@@ -3,7 +3,7 @@ package com.codeaddi.scheduler_service.controller;
 import com.codeaddi.scheduler_service.controller.db.SessionsService;
 import com.codeaddi.scheduler_service.model.http.StandardResponse;
 import com.codeaddi.scheduler_service.model.http.enums.Status;
-import com.codeaddi.scheduler_service.model.repository.Session;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class SessionController {
           .body(
               StandardResponse.builder()
                   .status(Status.SUCCESS_WITH_WARNING)
-                  .message("Session not found, new session made")
+                  .message("New session made")
                   .build());
     }
   }
