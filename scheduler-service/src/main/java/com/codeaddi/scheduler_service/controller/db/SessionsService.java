@@ -36,15 +36,17 @@ public class SessionsService {
     addSession(newSession);
   }
 
-  private Session findSameSessions(Session newSession){
-    List<Session> sameSessions = sessionRepository.findByCriteria(newSession.getDay(),
+  private Session findSameSessions(Session newSession) {
+    List<Session> sameSessions =
+        sessionRepository.findByCriteria(
+            newSession.getDay(),
             newSession.getStartTime(),
             newSession.getEndTime(),
             newSession.getSquad(),
             newSession.getLevel(),
             newSession.getSessionType());
 
-    if(sameSessions.isEmpty()){
+    if (sameSessions.isEmpty()) {
       throw new EntityNotFoundException("No entity of this description currently in the DB");
     } else {
       return sameSessions.stream().findFirst().get();
