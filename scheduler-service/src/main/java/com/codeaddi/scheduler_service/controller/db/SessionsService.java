@@ -26,17 +26,29 @@ public class SessionsService {
 
   @Transactional
   public void replaceSession(Session newSession) {
-    Session existingSession = findById(newSession.getId());
+    Session existingSession = findSameSessions(newSession);
 
     log.info("Deleting session: {}", existingSession.toString());
 
     sessionRepository.deleteById(existingSession.getId());
 
     upcomingSessionsService.removeUpcomingSessionsForRemovedSession(existingSession.getId());
-    log.info("Adding new session: {}", newSession);
-    sessionRepository.save(newSession);
+    addSession(newSession);
+  }
 
-    upcomingSessionsService.initAddFourWeeksOfUpcomingSessions(newSession.getId());
+  private Session findSameSessions(Session newSession){
+    List<Session> sameSessions = sessionRepository.findByCriteria(newSession.getDay(),
+            newSession.getStartTime(),
+            newSession.getEndTime(),
+            newSession.getSquad(),
+            newSession.getLevel(),
+            newSession.getSessionType());
+
+    if(sameSessions.isEmpty()){
+      throw new EntityNotFoundException("No entity of this description currently in the DB");
+    } else {
+      return sameSessions.stream().findFirst().get();
+    }
   }
 
   @Transactional
