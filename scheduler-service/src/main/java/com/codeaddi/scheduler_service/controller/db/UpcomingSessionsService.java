@@ -37,7 +37,7 @@ public class UpcomingSessionsService {
     storedProcedureHandler.updateUpcomingSessions(todaysDate());
   }
 
-  public List<UpcomingSession> getAllUpcomingSessions(){
+  public List<UpcomingSession> getAllUpcomingSessions() {
     return upcomingSessionsRepository.findAll();
   }
 
