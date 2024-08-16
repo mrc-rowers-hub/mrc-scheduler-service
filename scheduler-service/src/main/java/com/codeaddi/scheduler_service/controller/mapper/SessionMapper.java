@@ -22,7 +22,7 @@ public class SessionMapper {
                 .orElseThrow(IllegalArgumentException::new);
         upcomingAvailabilityDTOS.add(
             UpcomingAvailabilityDTO.builder()
-                .upcomingSessionId(session.getId())
+                .upcomingSessionId(upcomingSession.getUpcomingSessionId())
                 .date(upcomingSession.getDate())
                 .startTime(session.getStartTime())
                 .endTime(session.getEndTime())
