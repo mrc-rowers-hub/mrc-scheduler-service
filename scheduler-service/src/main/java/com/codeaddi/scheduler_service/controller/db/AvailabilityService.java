@@ -18,7 +18,13 @@ public class AvailabilityService {
 
   @Transactional
   public StandardResponse saveAvailability(AvailabilityDTO availabilityDTO) {
+    String responseMessage;
+
+
     if (!rowerExists()) {
+      responseMessage ="Rower does not exist in DB";
+      log.info("Session ID: {}, RowerID: {}, Message: {}", availabilityDTO.getSessionId(), availabilityDTO.getRowerId(), responseMessage);
+
       return StandardResponse.builder()
           .id(availabilityDTO.getRowerId().toString())
           .status(Status.REJECTED)
@@ -31,7 +37,6 @@ public class AvailabilityService {
 
     boolean updateAvailability = updateMadeAndResponseMessage.containsKey(Boolean.TRUE);
 
-    String responseMessage;
 
     if (updateAvailability) {
       responseMessage = updateMadeAndResponseMessage.get(Boolean.TRUE);
@@ -44,6 +49,8 @@ public class AvailabilityService {
       upcomingSessionsAvailabilityRepository.save(availability);
       responseMessage = "Availability added";
     }
+
+    log.info("Session ID: {}, RowerID: {}, Message: {}", availabilityDTO.getSessionId(), availabilityDTO.getRowerId(), responseMessage);
 
     return StandardResponse.builder()
         .id(availabilityDTO.getRowerId().toString())
