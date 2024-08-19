@@ -97,7 +97,7 @@ public class SessionControllerTests {
 
     String requestBody = testUtils.convertSessionToJson(TestData.validSession);
     String expectedResponse =
-        "{\"status\":\"SUCCESS_WITH_WARNING\",\"message\":\"Session not found, new session made\"}";
+        "{\"status\":\"SUCCESS_WITH_WARNING\",\"message\":\"New session made\"}";
 
     String actualResponse =
         given()
