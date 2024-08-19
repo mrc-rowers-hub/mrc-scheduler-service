@@ -3,6 +3,7 @@ package com.codeaddi.scheduler_service.testUtils;
 import com.codeaddi.scheduler_service.model.enums.RowerLevel;
 import com.codeaddi.scheduler_service.model.enums.SessionType;
 import com.codeaddi.scheduler_service.model.enums.Squad;
+import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import java.time.LocalTime;
 import java.util.List;
@@ -51,4 +52,6 @@ public class TestData {
           .sessionType(SessionType.ERG)
           .build();
   public static List<Session> listOfSessions = List.of(validSession, session2);
+
+  public static AvailabilityDTO availabilityDTORowerAvailable = AvailabilityDTO.builder().availability(true).sessionId(1L).rowerId(2L).build();
 }
