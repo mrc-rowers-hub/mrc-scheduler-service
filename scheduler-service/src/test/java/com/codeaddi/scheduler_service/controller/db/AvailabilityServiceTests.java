@@ -37,32 +37,25 @@ public class AvailabilityServiceTests {
 
     @Test
     void saveAvailability_noAvailabilityExists_savesAvailability(){
-        StandardResponse expectedResponse = StandardResponse.builder().id(TestData.availabilityDTORowerAvailable.getRowerId().toString()).status(Status.SUCCESS).message("Availability added").build();
-
-
         when(upcomingSessionsAvailabilityRepository.findUpcomingSessionAvailabilitiesByRowerIdAndUpcomingSessionId(anyLong(), anyLong()))
                 .thenReturn(null);
 
         StandardResponse response = availabilityService.saveAvailability(TestData.availabilityDTORowerAvailable);
 
-        assertEquals(expectedResponse.getStatus(), response.getStatus());
-        assertEquals(expectedResponse.getMessage(), response.getMessage());
+        assertEquals(TestData.standardResponseAvailabilityAdded.getStatus(), response.getStatus());
+        assertEquals(TestData.standardResponseAvailabilityAdded.getMessage(), response.getMessage());
         verify(upcomingSessionsAvailabilityRepository, times(1)).save(any(UpcomingSessionAvailability.class));
     }
 
     @Test
     void saveAvailability_availabilityAlreadyExists_updatesAvailability(){
-        StandardResponse expectedResponse = StandardResponse.builder().id(TestData.availabilityDTORowerAvailable.getRowerId().toString()).status(Status.SUCCESS).message("Availability update - no action, already available").build();
-
-
-
         when(upcomingSessionsAvailabilityRepository.findUpcomingSessionAvailabilitiesByRowerIdAndUpcomingSessionId(anyLong(), anyLong()))
                 .thenReturn(TestData.existingAvailability);
 
         StandardResponse response = availabilityService.saveAvailability(TestData.availabilityDTORowerAvailable);
 
-        assertEquals(expectedResponse.getStatus(), response.getStatus());
-        assertEquals(expectedResponse.getMessage(), response.getMessage());
+        assertEquals(TestData.standardResponseAvailabilityNotUpdated.getStatus(), response.getStatus());
+        assertEquals(TestData.standardResponseAvailabilityNotUpdated.getMessage(), response.getMessage());
         verify(upcomingSessionsAvailabilityRepository, never()).save(any(UpcomingSessionAvailability.class));
         verify(upcomingSessionsAvailabilityRepository, never()).delete(any(UpcomingSessionAvailability.class));
 
@@ -70,8 +63,6 @@ public class AvailabilityServiceTests {
 
     @Test
     void saveAvailability_availabilityExistsANDRowerNowUnavailable_savesAvailability(){
-        StandardResponse expectedResponse = StandardResponse.builder().id(TestData.availabilityDTORowerAvailable.getRowerId().toString()).status(Status.SUCCESS).message("Availability update - removed").build();
-
         when(upcomingSessionsAvailabilityRepository.findUpcomingSessionAvailabilitiesByRowerIdAndUpcomingSessionId(anyLong(), anyLong()))
                 .thenReturn(TestData.existingAvailability);
 
@@ -79,8 +70,8 @@ public class AvailabilityServiceTests {
 
         StandardResponse response = availabilityService.saveAvailability(TestData.availabilityDTORowerUnavailable);
 
-        assertEquals(expectedResponse.getStatus(), response.getStatus());
-        assertEquals(expectedResponse.getMessage(), response.getMessage());
+        assertEquals(TestData.standardResponseAvailabilityUpdatedToUnavailable.getStatus(), response.getStatus());
+        assertEquals(TestData.standardResponseAvailabilityUpdatedToUnavailable.getMessage(), response.getMessage());
         verify(upcomingSessionsAvailabilityRepository, never()).save(any(UpcomingSessionAvailability.class));
         verify(upcomingSessionsAvailabilityRepository, times(1)).delete(TestData.existingAvailability);
     }
