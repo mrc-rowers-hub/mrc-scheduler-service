@@ -1,8 +1,8 @@
 package com.codeaddi.scheduler_service.controller;
 
 import com.codeaddi.scheduler_service.controller.db.SessionsService;
-import com.codeaddi.scheduler_service.model.http.StandardResponse;
-import com.codeaddi.scheduler_service.model.http.enums.Status;
+import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
+import com.codeaddi.scheduler_service.model.http.outbound.enums.Status;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;

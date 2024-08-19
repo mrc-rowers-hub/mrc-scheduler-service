@@ -1,4 +1,4 @@
-package com.codeaddi.scheduler_service.model.http.enums;
+package com.codeaddi.scheduler_service.model.http.outbound.enums;
 
 public enum Status {
   SUCCESS,

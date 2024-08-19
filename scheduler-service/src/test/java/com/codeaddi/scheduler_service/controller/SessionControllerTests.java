@@ -42,7 +42,7 @@ public class SessionControllerTests {
   void getAllSessions_dataInDb_returnsAllSessions() throws JSONException {
     when(sessionsService.getAllSessions()).thenReturn(TestData.listOfSessions);
 
-    String expectedBody = testUtils.convertSessionsToJson(TestData.listOfSessions);
+    String expectedBody = testUtils.convertToJson(TestData.listOfSessions);
 
     String actual =
         RestAssuredMockMvc.when()
@@ -70,7 +70,7 @@ public class SessionControllerTests {
   void updateSession_sessionExists_returnsSuccessResponse() throws JSONException {
     doNothing().when(sessionsService).replaceSession(any(Session.class));
 
-    String requestBody = testUtils.convertSessionToJson(TestData.validSession);
+    String requestBody = testUtils.convertToJson(TestData.validSession);
     String expectedResponse = "{\"status\":\"SUCCESS\",\"message\":\"Session replaced\"}";
 
     String actualResponse =
@@ -95,9 +95,9 @@ public class SessionControllerTests {
         .replaceSession(any(Session.class));
     doNothing().when(sessionsService).addSession(any(Session.class));
 
-    String requestBody = testUtils.convertSessionToJson(TestData.validSession);
+    String requestBody = testUtils.convertToJson(TestData.validSession);
     String expectedResponse =
-        "{\"status\":\"SUCCESS_WITH_WARNING\",\"message\":\"Session not found, new session made\"}";
+        "{\"status\":\"SUCCESS_WITH_WARNING\",\"message\":\"New session made\"}";
 
     String actualResponse =
         given()

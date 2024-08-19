@@ -1,6 +1,6 @@
 package com.codeaddi.scheduler_service.controller.mapper;
 
-import com.codeaddi.scheduler_service.model.http.UpcomingAvailabilityDTO;
+import com.codeaddi.scheduler_service.model.http.outbound.UpcomingAvailabilityDTO;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSession;
 import java.util.ArrayList;

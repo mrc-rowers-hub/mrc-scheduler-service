@@ -3,7 +3,11 @@ package com.codeaddi.scheduler_service.testUtils;
 import com.codeaddi.scheduler_service.model.enums.RowerLevel;
 import com.codeaddi.scheduler_service.model.enums.SessionType;
 import com.codeaddi.scheduler_service.model.enums.Squad;
+import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
+import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
+import com.codeaddi.scheduler_service.model.http.outbound.enums.Status;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -51,4 +55,39 @@ public class TestData {
           .sessionType(SessionType.ERG)
           .build();
   public static List<Session> listOfSessions = List.of(validSession, session2);
+
+  public static Long rowerId = 2L;
+  public static Long upcomingSessionId = 1L;
+  public static AvailabilityDTO availabilityDTORowerAvailable =
+      AvailabilityDTO.builder()
+          .availability(true)
+          .sessionId(upcomingSessionId)
+          .rowerId(rowerId)
+          .build();
+  public static AvailabilityDTO availabilityDTORowerUnavailable =
+      AvailabilityDTO.builder()
+          .availability(false)
+          .sessionId(upcomingSessionId)
+          .rowerId(rowerId)
+          .build();
+  public static UpcomingSessionAvailability existingAvailability =
+      UpcomingSessionAvailability.builder().rowerId(2L).upcomingSessionId(1L).build();
+  public static StandardResponse standardResponseAvailabilityAdded =
+      StandardResponse.builder()
+          .id(TestData.availabilityDTORowerAvailable.getRowerId().toString())
+          .status(Status.SUCCESS)
+          .message("Availability added")
+          .build();
+  public static StandardResponse standardResponseAvailabilityNotUpdated =
+      StandardResponse.builder()
+          .id(TestData.availabilityDTORowerAvailable.getRowerId().toString())
+          .status(Status.SUCCESS)
+          .message("Availability update - no action, already available")
+          .build();
+  public static StandardResponse standardResponseAvailabilityUpdatedToUnavailable =
+      StandardResponse.builder()
+          .id(TestData.availabilityDTORowerAvailable.getRowerId().toString())
+          .status(Status.SUCCESS)
+          .message("Availability update - removed")
+          .build();
 }

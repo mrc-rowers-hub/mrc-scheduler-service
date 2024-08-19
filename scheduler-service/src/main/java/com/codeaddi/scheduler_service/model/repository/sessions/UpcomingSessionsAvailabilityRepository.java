@@ -20,4 +20,7 @@ public interface UpcomingSessionsAvailabilityRepository
 
   List<UpcomingSessionAvailability> findUpcomingSessionAvailabilitiesByUpcomingSessionId(
       Long upcomingSessionId);
+
+  UpcomingSessionAvailability findUpcomingSessionAvailabilitiesByRowerIdAndUpcomingSessionId(
+      Long rowerId, Long upcomingSessionId);
 }
