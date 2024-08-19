@@ -1,4 +1,4 @@
-package com.codeaddi.scheduler_service.model.http;
+package com.codeaddi.scheduler_service.model.http.outbound;
 
 import com.codeaddi.scheduler_service.model.enums.RowerLevel;
 import com.codeaddi.scheduler_service.model.enums.SessionType;

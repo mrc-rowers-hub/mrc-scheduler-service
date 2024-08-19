@@ -3,7 +3,7 @@ package com.codeaddi.scheduler_service.controller;
 import com.codeaddi.scheduler_service.controller.db.SessionsService;
 import com.codeaddi.scheduler_service.controller.db.UpcomingSessionsService;
 import com.codeaddi.scheduler_service.controller.mapper.SessionMapper;
-import com.codeaddi.scheduler_service.model.http.UpcomingAvailabilityDTO;
+import com.codeaddi.scheduler_service.model.http.outbound.UpcomingAvailabilityDTO;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
