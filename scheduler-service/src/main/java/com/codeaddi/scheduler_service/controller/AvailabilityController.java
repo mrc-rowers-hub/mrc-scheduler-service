@@ -7,7 +7,6 @@ import com.codeaddi.scheduler_service.controller.mapper.SessionMapper;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
 import com.codeaddi.scheduler_service.model.http.outbound.UpcomingAvailabilityDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -34,18 +33,15 @@ public class AvailabilityController {
   }
 
   @PostMapping("/save_availability")
-  public ResponseEntity<List<StandardResponse>> saveAvailability(@RequestBody List<AvailabilityDTO> availabilityData) {
+  public ResponseEntity<List<StandardResponse>> saveAvailability(
+      @RequestBody List<AvailabilityDTO> availabilityData) {
     List<StandardResponse> responses = new ArrayList<>();
 
-    for(AvailabilityDTO availabilityDTO : availabilityData){
+    for (AvailabilityDTO availabilityDTO : availabilityData) {
       StandardResponse standardResponse = availabilityService.saveAvailability(availabilityDTO);
       responses.add(standardResponse);
     }
 
     return ResponseEntity.ok(responses);
-
-
   }
-
-
 }

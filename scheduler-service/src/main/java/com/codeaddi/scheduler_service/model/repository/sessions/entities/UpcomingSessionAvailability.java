@@ -3,7 +3,7 @@ package com.codeaddi.scheduler_service.model.repository.sessions.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-//Todo tidy up annotations
+// Todo tidy up annotations
 @Entity
 @Table(name = "upcoming_session_availability")
 @ToString
