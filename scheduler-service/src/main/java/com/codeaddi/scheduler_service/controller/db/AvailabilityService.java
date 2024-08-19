@@ -38,7 +38,7 @@ public class AvailabilityService {
             responseMessage = "Availability added";
         }
 
-        return StandardResponse.builder().id(availabilityDTO.getRowerId().toString()).status(Status.SUCCESS).message(responseMessage).build();
+        return StandardResponse.builder().id(availabilityDTO.getRowerId().toString()).status(Status.SUCCESS).message(responseMessage).id(availabilityDTO.getSessionId().toString()).build();
     }
 
 

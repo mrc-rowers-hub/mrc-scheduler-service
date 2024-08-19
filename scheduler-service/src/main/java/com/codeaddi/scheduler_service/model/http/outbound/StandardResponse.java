@@ -13,4 +13,5 @@ import lombok.extern.jackson.Jacksonized;
 public class StandardResponse {
   private Status status;
   private String message;
+  private String id; // an optional id relating to the message
 }
