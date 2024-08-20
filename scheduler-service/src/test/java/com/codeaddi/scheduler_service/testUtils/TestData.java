@@ -6,6 +6,7 @@ import com.codeaddi.scheduler_service.model.enums.Squad;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
 import com.codeaddi.scheduler_service.model.http.outbound.enums.Status;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.Rower;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
 import java.time.LocalTime;
@@ -97,4 +98,6 @@ public class TestData {
           .status(Status.SUCCESS)
           .message("Availability update - removed")
           .build();
+  public static Rower rower1 = Rower.builder().name("Joe Bloggs").squad(Squad.MENS).level(RowerLevel.INTERMEDIATE).build();
+
 }
