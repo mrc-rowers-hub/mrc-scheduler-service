@@ -64,6 +64,7 @@ public class TestData {
           .sessionId(upcomingSessionId)
           .rowerId(rowerId)
           .build();
+
   public static AvailabilityDTO availabilityDTORowerUnavailable =
       AvailabilityDTO.builder()
           .availability(false)
@@ -84,6 +85,12 @@ public class TestData {
           .status(Status.SUCCESS)
           .message("Availability update - no action, already available")
           .build();
+  public static StandardResponse standardResponseUnvailabilityNotAdded =
+          StandardResponse.builder()
+                  .id(TestData.availabilityDTORowerAvailable.getRowerId().toString())
+                  .status(Status.SUCCESS)
+                  .message("Rower unavailable - no availability saved")
+                  .build();
   public static StandardResponse standardResponseAvailabilityUpdatedToUnavailable =
       StandardResponse.builder()
           .id(TestData.availabilityDTORowerAvailable.getRowerId().toString())

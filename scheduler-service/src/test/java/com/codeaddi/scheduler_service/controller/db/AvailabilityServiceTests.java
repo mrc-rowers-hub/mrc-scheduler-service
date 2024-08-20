@@ -41,6 +41,21 @@ public class AvailabilityServiceTests {
   }
 
   @Test
+  void saveAvailability_noAvailabilityExistsANDRowerUnavailable_doesNotSaveAvailability() {
+    when(upcomingSessionsAvailabilityRepository
+            .findUpcomingSessionAvailabilitiesByRowerIdAndUpcomingSessionId(anyLong(), anyLong()))
+            .thenReturn(null);
+
+    StandardResponse response =
+            availabilityService.saveAvailability(TestData.availabilityDTORowerUnavailable);
+
+    assertEquals(TestData.standardResponseUnvailabilityNotAdded.getStatus(), response.getStatus());
+    assertEquals(TestData.standardResponseUnvailabilityNotAdded.getMessage(), response.getMessage());
+    verify(upcomingSessionsAvailabilityRepository, times(0))
+            .save(any(UpcomingSessionAvailability.class));
+  }
+
+  @Test
   void saveAvailability_availabilityAlreadyExists_updatesAvailability() {
     when(upcomingSessionsAvailabilityRepository
             .findUpcomingSessionAvailabilitiesByRowerIdAndUpcomingSessionId(anyLong(), anyLong()))
