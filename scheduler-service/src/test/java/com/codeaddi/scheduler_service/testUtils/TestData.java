@@ -6,6 +6,8 @@ import com.codeaddi.scheduler_service.model.enums.Squad;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
 import com.codeaddi.scheduler_service.model.http.outbound.enums.Status;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSessionAvailability;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.Rower;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
 import java.time.LocalTime;
@@ -86,15 +88,19 @@ public class TestData {
           .message("Availability update - no action, already available")
           .build();
   public static StandardResponse standardResponseUnvailabilityNotAdded =
-          StandardResponse.builder()
-                  .id(TestData.availabilityDTORowerAvailable.getRowerId().toString())
-                  .status(Status.SUCCESS)
-                  .message("Rower unavailable - no availability saved")
-                  .build();
+      StandardResponse.builder()
+          .id(TestData.availabilityDTORowerAvailable.getRowerId().toString())
+          .status(Status.SUCCESS)
+          .message("Rower unavailable - no availability saved")
+          .build();
   public static StandardResponse standardResponseAvailabilityUpdatedToUnavailable =
       StandardResponse.builder()
           .id(TestData.availabilityDTORowerAvailable.getRowerId().toString())
           .status(Status.SUCCESS)
           .message("Availability update - removed")
           .build();
+  public static Rower rower1 =
+      Rower.builder().name("Joe Bloggs").squad(Squad.MENS).level(RowerLevel.INTERMEDIATE).build();
+  public static PastSessionAvailability pastSessionAvailability1 =
+      PastSessionAvailability.builder().upcomingSessionId(1L).upcomingSessionId(1L).build();
 }

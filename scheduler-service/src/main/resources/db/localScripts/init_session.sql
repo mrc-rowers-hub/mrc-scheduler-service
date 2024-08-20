@@ -68,3 +68,10 @@ INSERT INTO upcoming_session_availability
 (upcoming_session_id, rower_id)
 VALUES (1, 24);
 
+
+INSERT rowers
+(name, squad, level)
+VALUES
+('Addi', 'WOMENS', 'NOVICE'),
+('Jess C', 'WOMENS', 'INTERMEDIATE'),
+('Laura', 'WOMENS', 'SENIOR');
