@@ -41,13 +41,17 @@ public class AvailabilityService {
     if (updateAvailability) {
       responseMessage = updateMadeAndResponseMessage.get(Boolean.TRUE);
     } else {
-      UpcomingSessionAvailability availability =
-          UpcomingSessionAvailability.builder()
-              .upcomingSessionId(availabilityDTO.getSessionId())
-              .rowerId(availabilityDTO.getRowerId())
-              .build();
-      upcomingSessionsAvailabilityRepository.save(availability);
-      responseMessage = "Availability added";
+      if(availabilityDTO.isAvailability()) {
+        UpcomingSessionAvailability availability =
+                UpcomingSessionAvailability.builder()
+                        .upcomingSessionId(availabilityDTO.getSessionId())
+                        .rowerId(availabilityDTO.getRowerId())
+                        .build();
+        upcomingSessionsAvailabilityRepository.save(availability);
+        responseMessage = "Availability added";
+      } else {
+        responseMessage = "Rower unavailable - no availability saved";
+      }
     }
 
     log.info("Session ID: {}, RowerID: {}, Message: {}", availabilityDTO.getSessionId(), availabilityDTO.getRowerId(), responseMessage);
