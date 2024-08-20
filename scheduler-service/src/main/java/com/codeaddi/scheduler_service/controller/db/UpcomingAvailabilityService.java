@@ -1,4 +1,4 @@
-package com.codeaddi.scheduler_service.controller;
+package com.codeaddi.scheduler_service.controller.db;
 
 import org.springframework.stereotype.Service;
 
