@@ -55,4 +55,12 @@ public class AvailabilityController {
       log.info("Retrieving upcoming availability for rower {}", rowerId);
       return ResponseEntity.ok(upcomingAvailabilityService.getAllAvailabilityForRower(rowerId));
     }
+
+  @GetMapping("/get_rowers_availability")
+  public void getRowersAvailability(){
+    log.info("Retrieving all rowers availability");
+    // will have to be only those in the past_session_availability table
+  }
+
+
 }
