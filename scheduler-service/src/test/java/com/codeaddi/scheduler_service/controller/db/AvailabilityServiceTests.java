@@ -44,15 +44,16 @@ public class AvailabilityServiceTests {
   void saveAvailability_noAvailabilityExistsANDRowerUnavailable_doesNotSaveAvailability() {
     when(upcomingSessionsAvailabilityRepository
             .findUpcomingSessionAvailabilitiesByRowerIdAndUpcomingSessionId(anyLong(), anyLong()))
-            .thenReturn(null);
+        .thenReturn(null);
 
     StandardResponse response =
-            availabilityService.saveAvailability(TestData.availabilityDTORowerUnavailable);
+        availabilityService.saveAvailability(TestData.availabilityDTORowerUnavailable);
 
     assertEquals(TestData.standardResponseUnvailabilityNotAdded.getStatus(), response.getStatus());
-    assertEquals(TestData.standardResponseUnvailabilityNotAdded.getMessage(), response.getMessage());
+    assertEquals(
+        TestData.standardResponseUnvailabilityNotAdded.getMessage(), response.getMessage());
     verify(upcomingSessionsAvailabilityRepository, times(0))
-            .save(any(UpcomingSessionAvailability.class));
+        .save(any(UpcomingSessionAvailability.class));
   }
 
   @Test

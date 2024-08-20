@@ -30,8 +30,7 @@ public class AvailabilityControllerTests {
   private TestUtils testUtils = new TestUtils();
 
   @Mock AvailabilityService availabilityService;
-  @Mock
-  PastAvailabilityService pastAvailabilityService;
+  @Mock PastAvailabilityService pastAvailabilityService;
 
   @InjectMocks AvailabilityController availabilityController;
 
@@ -102,21 +101,21 @@ public class AvailabilityControllerTests {
     JSONAssert.assertEquals(expectedResponse, actualResponse, false);
   }
 
-
   @Test
   void getRowersAvailability_dataInDb_returnsAllSessions() throws JSONException {
-    when(pastAvailabilityService.getAllPastAvailability()).thenReturn(List.of(TestData.pastSessionAvailability1));
+    when(pastAvailabilityService.getAllPastAvailability())
+        .thenReturn(List.of(TestData.pastSessionAvailability1));
 
     String expectedBody = testUtils.convertToJson(List.of(TestData.pastSessionAvailability1));
 
     String actual =
-            RestAssuredMockMvc.when()
-                    .get("/session_availability/get_rowers_availability")
-                    .then()
-                    .statusCode(HttpStatus.OK.value())
-                    .extract()
-                    .body()
-                    .asString();
+        RestAssuredMockMvc.when()
+            .get("/session_availability/get_rowers_availability")
+            .then()
+            .statusCode(HttpStatus.OK.value())
+            .extract()
+            .body()
+            .asString();
 
     JSONAssert.assertEquals(expectedBody, actual, false);
   }

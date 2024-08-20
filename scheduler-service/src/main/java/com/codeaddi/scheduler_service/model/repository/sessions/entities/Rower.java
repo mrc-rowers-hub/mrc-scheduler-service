@@ -28,8 +28,8 @@ public class Rower {
   private Squad squad;
 
   @Column(
-          name = "level",
-          columnDefinition = "ENUM('DEVELOPMENT', 'NOVICE', 'INTERMEDIATE', 'SENIOR')")
+      name = "level",
+      columnDefinition = "ENUM('DEVELOPMENT', 'NOVICE', 'INTERMEDIATE', 'SENIOR')")
   @Enumerated(EnumType.STRING)
   private RowerLevel level;
 }

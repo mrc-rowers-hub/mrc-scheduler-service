@@ -20,10 +20,13 @@ public class AvailabilityService {
   public StandardResponse saveAvailability(AvailabilityDTO availabilityDTO) {
     String responseMessage;
 
-
     if (!rowerExists()) {
-      responseMessage ="Rower does not exist in DB";
-      log.info("Session ID: {}, RowerID: {}, Message: {}", availabilityDTO.getSessionId(), availabilityDTO.getRowerId(), responseMessage);
+      responseMessage = "Rower does not exist in DB";
+      log.info(
+          "Session ID: {}, RowerID: {}, Message: {}",
+          availabilityDTO.getSessionId(),
+          availabilityDTO.getRowerId(),
+          responseMessage);
 
       return StandardResponse.builder()
           .id(availabilityDTO.getRowerId().toString())
@@ -37,16 +40,15 @@ public class AvailabilityService {
 
     boolean updateAvailability = updateMadeAndResponseMessage.containsKey(Boolean.TRUE);
 
-
     if (updateAvailability) {
       responseMessage = updateMadeAndResponseMessage.get(Boolean.TRUE);
     } else {
-      if(availabilityDTO.isAvailability()) {
+      if (availabilityDTO.isAvailability()) {
         UpcomingSessionAvailability availability =
-                UpcomingSessionAvailability.builder()
-                        .upcomingSessionId(availabilityDTO.getSessionId())
-                        .rowerId(availabilityDTO.getRowerId())
-                        .build();
+            UpcomingSessionAvailability.builder()
+                .upcomingSessionId(availabilityDTO.getSessionId())
+                .rowerId(availabilityDTO.getRowerId())
+                .build();
         upcomingSessionsAvailabilityRepository.save(availability);
         responseMessage = "Availability added";
       } else {
@@ -54,7 +56,11 @@ public class AvailabilityService {
       }
     }
 
-    log.info("Session ID: {}, RowerID: {}, Message: {}", availabilityDTO.getSessionId(), availabilityDTO.getRowerId(), responseMessage);
+    log.info(
+        "Session ID: {}, RowerID: {}, Message: {}",
+        availabilityDTO.getSessionId(),
+        availabilityDTO.getRowerId(),
+        responseMessage);
 
     return StandardResponse.builder()
         .id(availabilityDTO.getRowerId().toString())

@@ -1,14 +1,12 @@
 package com.codeaddi.scheduler_service.controller;
 
+import static org.mockito.Mockito.*;
+
 import com.codeaddi.scheduler_service.controller.db.RowerService;
-import com.codeaddi.scheduler_service.controller.db.SessionsService;
-import com.codeaddi.scheduler_service.model.repository.sessions.entities.Rower;
-import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import com.codeaddi.scheduler_service.testUtils.TestData;
 import com.codeaddi.scheduler_service.testUtils.TestUtils;
-import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,23 +18,15 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class RowerControllerTests {
 
   private TestUtils testUtils = new TestUtils();
 
-  @Mock
-  RowerService rowerService;
+  @Mock RowerService rowerService;
 
-  @InjectMocks
-  RowerController rowerController;
+  @InjectMocks RowerController rowerController;
 
   @BeforeEach
   public void setUpMockSessionController() {
@@ -60,6 +50,4 @@ public class RowerControllerTests {
 
     JSONAssert.assertEquals(expectedBody, actual, false);
   }
-
-
 }
