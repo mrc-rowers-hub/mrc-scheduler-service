@@ -2,6 +2,7 @@ package com.codeaddi.scheduler_service.controller;
 
 import com.codeaddi.scheduler_service.controller.db.AvailabilityService;
 import com.codeaddi.scheduler_service.controller.db.SessionsService;
+import com.codeaddi.scheduler_service.controller.db.UpcomingAvailabilityService;
 import com.codeaddi.scheduler_service.controller.db.UpcomingSessionsService;
 import com.codeaddi.scheduler_service.controller.mapper.SessionMapper;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
@@ -9,6 +10,8 @@ import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
 import com.codeaddi.scheduler_service.model.http.outbound.UpcomingAvailabilityDTO;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class AvailabilityController {
 
   @Autowired UpcomingSessionsService upcomingSessionsService;
+  @Autowired
+  UpcomingAvailabilityService upcomingAvailabilityService;
 
   @Autowired private SessionsService sessionsService;
   @Autowired private AvailabilityService availabilityService;
@@ -44,4 +49,10 @@ public class AvailabilityController {
 
     return ResponseEntity.ok(responses);
   }
+
+    @GetMapping("/get_upcoming_availability")
+    public ResponseEntity<List<UpcomingSessionAvailability>> getUpcomingAvailabilityForRower(@RequestParam Long rowerId) {
+      log.info("Retrieving upcoming availability for rower {}", rowerId);
+      return ResponseEntity.ok(upcomingAvailabilityService.getAllAvailabilityForRower(rowerId));
+    }
 }
