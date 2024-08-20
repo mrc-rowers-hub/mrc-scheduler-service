@@ -75,3 +75,16 @@ VALUES
 ('Addi', 'WOMENS', 'NOVICE'),
 ('Jess C', 'WOMENS', 'INTERMEDIATE'),
 ('Laura', 'WOMENS', 'SENIOR');
+
+INSERT INTO past_sessions
+(upcoming_session_id, session_id, date)
+VALUES
+(1, 1, '2024-01-01'),
+(2, 2, '2024-01-02');
+
+INSERT INTO past_session_availability
+(upcoming_session_id, rower_id)
+VALUES
+(1, 1),
+(2, 1),
+(1, 3);
