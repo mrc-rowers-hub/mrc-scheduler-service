@@ -6,6 +6,7 @@ import com.codeaddi.scheduler_service.model.enums.Squad;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
 import com.codeaddi.scheduler_service.model.http.outbound.enums.Status;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSessionAvailability;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.Rower;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
@@ -99,5 +100,5 @@ public class TestData {
           .message("Availability update - removed")
           .build();
   public static Rower rower1 = Rower.builder().name("Joe Bloggs").squad(Squad.MENS).level(RowerLevel.INTERMEDIATE).build();
-
+  public static PastSessionAvailability pastSessionAvailability1 = PastSessionAvailability.builder().upcomingSessionId(1L).upcomingSessionId(1L).build();
 }

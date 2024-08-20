@@ -1,9 +1,6 @@
 package com.codeaddi.scheduler_service.controller;
 
-import com.codeaddi.scheduler_service.controller.db.AvailabilityService;
-import com.codeaddi.scheduler_service.controller.db.SessionsService;
-import com.codeaddi.scheduler_service.controller.db.UpcomingAvailabilityService;
-import com.codeaddi.scheduler_service.controller.db.UpcomingSessionsService;
+import com.codeaddi.scheduler_service.controller.db.*;
 import com.codeaddi.scheduler_service.controller.mapper.SessionMapper;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
@@ -11,6 +8,7 @@ import com.codeaddi.scheduler_service.model.http.outbound.UpcomingAvailabilityDT
 import java.util.ArrayList;
 import java.util.List;
 
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSessionAvailability;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +22,13 @@ public class AvailabilityController {
 
   @Autowired UpcomingSessionsService upcomingSessionsService;
   @Autowired
+  PastAvailabilityService pastAvailabilityService;
+  @Autowired
   UpcomingAvailabilityService upcomingAvailabilityService;
 
   @Autowired private SessionsService sessionsService;
   @Autowired private AvailabilityService availabilityService;
+
 
   @GetMapping("/get_all_upcoming_sessions")
   public ResponseEntity<List<UpcomingAvailabilityDTO>> getAllUpcomingSessions() {
@@ -57,9 +58,9 @@ public class AvailabilityController {
     }
 
   @GetMapping("/get_rowers_availability")
-  public void getRowersAvailability(){
+  public ResponseEntity<List<PastSessionAvailability>> getRowersAvailability(){
     log.info("Retrieving all rowers availability");
-    // will have to be only those in the past_session_availability table
+    return ResponseEntity.ok(pastAvailabilityService.getAllPastAvailability());
   }
 
 

@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import com.codeaddi.scheduler_service.controller.db.AvailabilityService;
+import com.codeaddi.scheduler_service.controller.db.PastAvailabilityService;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.testUtils.TestData;
 import com.codeaddi.scheduler_service.testUtils.TestUtils;
@@ -29,6 +30,8 @@ public class AvailabilityControllerTests {
   private TestUtils testUtils = new TestUtils();
 
   @Mock AvailabilityService availabilityService;
+  @Mock
+  PastAvailabilityService pastAvailabilityService;
 
   @InjectMocks AvailabilityController availabilityController;
 
@@ -97,5 +100,24 @@ public class AvailabilityControllerTests {
             .asString();
 
     JSONAssert.assertEquals(expectedResponse, actualResponse, false);
+  }
+
+
+  @Test
+  void getRowersAvailability_dataInDb_returnsAllSessions() throws JSONException {
+    when(pastAvailabilityService.getAllPastAvailability()).thenReturn(List.of(TestData.pastSessionAvailability1));
+
+    String expectedBody = testUtils.convertToJson(List.of(TestData.pastSessionAvailability1));
+
+    String actual =
+            RestAssuredMockMvc.when()
+                    .get("/session_availability/get_rowers_availability")
+                    .then()
+                    .statusCode(HttpStatus.OK.value())
+                    .extract()
+                    .body()
+                    .asString();
+
+    JSONAssert.assertEquals(expectedBody, actual, false);
   }
 }

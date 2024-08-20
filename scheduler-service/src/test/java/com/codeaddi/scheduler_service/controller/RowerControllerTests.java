@@ -44,7 +44,7 @@ public class RowerControllerTests {
   }
 
   @Test
-  void getAllSessions_dataInDb_returnsAllSessions() throws JSONException {
+  void getAllRowers_dataInDb_returnsAllSessions() throws JSONException {
     when(rowerService.getAllRowers()).thenReturn(List.of(TestData.rower1));
 
     String expectedBody = testUtils.convertToJson(List.of(TestData.rower1));
