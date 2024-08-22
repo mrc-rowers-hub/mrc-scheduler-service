@@ -6,11 +6,11 @@ import com.codeaddi.scheduler_service.model.enums.Squad;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
 import com.codeaddi.scheduler_service.model.http.outbound.enums.Status;
-import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSessionAvailability;
-import com.codeaddi.scheduler_service.model.repository.sessions.entities.Rower;
-import com.codeaddi.scheduler_service.model.repository.sessions.entities.Session;
-import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 public class TestData {
@@ -103,4 +103,26 @@ public class TestData {
       Rower.builder().name("Joe Bloggs").squad(Squad.MENS).level(RowerLevel.INTERMEDIATE).build();
   public static PastSessionAvailability pastSessionAvailability1 =
       PastSessionAvailability.builder().upcomingSessionId(1L).upcomingSessionId(1L).build();
+
+  // Todo cleanup to use nested classes
+
+  class TimeData {
+    static Instant now = Instant.now();
+    static Duration oneMinute = Duration.ofMinutes(1);
+    static Instant oneMinuteLater = now.plus(oneMinute);
+    static Instant oneMinuteAgo = now.minus(oneMinute);
+  }
+
+  public static PastSession pastSessionNotYetOccurred =
+      PastSession.builder()
+          .upcomingSessionId(1L)
+          .sessionId(1L)
+          .date(Date.from(TimeData.oneMinuteLater))
+          .build();
+  public static PastSession pastSessionJustGone =
+      PastSession.builder()
+          .upcomingSessionId(2L)
+          .sessionId(2L)
+          .date(Date.from(TimeData.oneMinuteAgo))
+          .build();
 }

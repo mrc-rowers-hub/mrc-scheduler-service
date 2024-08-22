@@ -13,6 +13,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PastSession {
+  // a class for sessions after the
+  // cutoff time for availability,
+  //  not necessarily in the past
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
