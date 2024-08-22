@@ -5,6 +5,7 @@ import com.codeaddi.scheduler_service.controller.mapper.SessionMapper;
 import com.codeaddi.scheduler_service.model.http.inbound.AvailabilityDTO;
 import com.codeaddi.scheduler_service.model.http.outbound.StandardResponse;
 import com.codeaddi.scheduler_service.model.http.outbound.UpcomingAvailabilityDTO;
+import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSession;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSessionAvailability;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class AvailabilityController {
 
   @Autowired UpcomingSessionsService upcomingSessionsService;
   @Autowired PastAvailabilityService pastAvailabilityService;
+  @Autowired PastSessionsService pastSessionsService;
   @Autowired UpcomingAvailabilityService upcomingAvailabilityService;
 
   @Autowired private SessionsService sessionsService;
@@ -32,6 +34,12 @@ public class AvailabilityController {
         SessionMapper.mapSessionsAndUpcomingAvailFromDBToDTOs(
             sessionsService.getAllSessions(), upcomingSessionsService.getAllUpcomingSessions());
     return ResponseEntity.ok(upcomingAvailabilityDTOS);
+  }
+
+  @GetMapping("/get_upcoming_past_sessions")
+  public ResponseEntity<List<PastSession>> getUpcomingPastSessions(){
+    List<PastSession> sessions = pastSessionsService.getAllPastSessionsNotYetOccurred();
+    return ResponseEntity.ok(sessions);
   }
 
   @PostMapping("/save_availability")
@@ -59,4 +67,5 @@ public class AvailabilityController {
     log.info("Retrieving all rowers availability");
     return ResponseEntity.ok(pastAvailabilityService.getAllPastAvailability());
   }
+
 }

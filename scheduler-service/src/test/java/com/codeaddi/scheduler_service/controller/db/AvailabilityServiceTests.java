@@ -11,7 +11,6 @@ import com.codeaddi.scheduler_service.model.repository.sessions.entities.Upcomin
 import com.codeaddi.scheduler_service.testUtils.TestData;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
