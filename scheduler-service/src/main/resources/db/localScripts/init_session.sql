@@ -76,11 +76,14 @@ VALUES
 ('Jess C', 'WOMENS', 'INTERMEDIATE'),
 ('Laura', 'WOMENS', 'SENIOR');
 
+
 INSERT INTO past_sessions
 (upcoming_session_id, session_id, date)
 VALUES
-(1, 1, '2024-01-01'),
-(2, 2, '2024-01-02');
+    (1, 1, '2024-01-01'),
+    (2, 2, '2024-01-02'),
+    (4, 2, '2025-01-02'),
+    (3, 2, '2024-11-11');
 
 INSERT INTO past_session_availability
 (upcoming_session_id, rower_id)
