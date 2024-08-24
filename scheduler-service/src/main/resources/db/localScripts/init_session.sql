@@ -1,3 +1,5 @@
+USE rowers_hub;
+
 INSERT INTO rowers_hub.sessions
 ( day,
   start_time,
