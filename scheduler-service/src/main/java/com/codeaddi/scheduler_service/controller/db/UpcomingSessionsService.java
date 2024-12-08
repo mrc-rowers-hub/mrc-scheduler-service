@@ -34,8 +34,6 @@ public class UpcomingSessionsService {
 
   @Transactional
   public void addNewWeekOfUpcomingSessions(DayOfWeek dayOfWeek) {
-    // if day of week = saturday, then move everything up to & including next friday at midnight
-    // if day of the week = Wednesday, move everything up to & including sunday at midnight
     java.sql.Date dateUntil = getUpcomingDate(dayOfWeek);
     List<UpcomingSession> oldSessions = moveOldSessions(dateUntil);
     moveOldAvailabilities(oldSessions);
@@ -119,15 +117,12 @@ public class UpcomingSessionsService {
 
     switch (dayOfWeek) {
       case SATURDAY:
-        // Get next Friday relative to today
         targetDate = today.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
         break;
       case WEDNESDAY:
-        // Get next Sunday relative to today
         targetDate = today.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
         break;
       default:
-        // Throw exception for unsupported DayOfWeek
         throw new IllegalArgumentException("Unsupported DayOfWeek: " + dayOfWeek);
     }
 

@@ -15,7 +15,7 @@ public class UpcomingSessionsJobs {
   @Autowired UpcomingSessionsService upcomingSessionsService;
 
   @PostConstruct
-  public void init() { // performed upon startup to clear anyuthing
+  public void init() { // performed upon startup
     // if now is saturday 8:01pm - weds 7:59pm, then perform the saturday one
     // otherwise, do the wednesday one
     LocalDateTime now = LocalDateTime.now();
@@ -30,12 +30,12 @@ public class UpcomingSessionsJobs {
     }
   }
 
-  @Scheduled(cron = "0 0 20 * * SAT") // Every Saturday at 8pm
+  @Scheduled(cron = "0 0 20 * * SAT")
   public void addNewUpcomingSessionsSaturday() {
     upcomingSessionsService.addNewWeekOfUpcomingSessions(DayOfWeek.SATURDAY);
   }
 
-  @Scheduled(cron = "0 0 20 * * WED") // Every Weds at 8pm
+  @Scheduled(cron = "0 0 20 * * WED")
   public void addNewUpcomingSessionsWednesday() {
     upcomingSessionsService.addNewWeekOfUpcomingSessions(DayOfWeek.WEDNESDAY);
   }
