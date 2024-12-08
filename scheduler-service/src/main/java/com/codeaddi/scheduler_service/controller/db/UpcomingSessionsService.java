@@ -8,6 +8,9 @@ import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSes
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.PastSessionAvailability;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSession;
 import com.codeaddi.scheduler_service.model.repository.sessions.entities.UpcomingSessionAvailability;
+
+import java.time.temporal.TemporalAdjusters;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -30,20 +33,23 @@ public class UpcomingSessionsService {
   @Autowired StoredProcedureHandler storedProcedureHandler;
 
   @Transactional
-  public void addNewWeekOfUpcomingSessions() {
-    List<UpcomingSession> oldSessions = moveOldSessions();
+  public void addNewWeekOfUpcomingSessions(DayOfWeek dayOfWeek) {
+    // if day of week = saturday, then move everything up to & including next friday at midnight
+    // if day of the week = Wednesday, move everything up to & including sunday at midnight
+    java.sql.Date dateUntil = getUpcomingDate(dayOfWeek);
+    List<UpcomingSession> oldSessions = moveOldSessions(dateUntil);
     moveOldAvailabilities(oldSessions);
 
-    storedProcedureHandler.updateUpcomingSessions(todaysDate());
+    storedProcedureHandler.updateUpcomingSessions(dateUntil);
   }
 
   public List<UpcomingSession> getAllUpcomingSessions() {
     return upcomingSessionsRepository.findAll();
   }
 
-  private List<UpcomingSession> moveOldSessions() {
+  private List<UpcomingSession> moveOldSessions(java.sql.Date dateUntil) {
     List<UpcomingSession> pastSessions =
-        upcomingSessionsRepository.findAllByDateBefore(todaysDate());
+        upcomingSessionsRepository.findAllByDateBefore(dateUntil);
 
     for (UpcomingSession upcomingSession : pastSessions) {
       Long upcomingSessionId = upcomingSession.getUpcomingSessionId();
@@ -107,8 +113,24 @@ public class UpcomingSessionsService {
     upcomingSessionsAvailabilityRepository.deleteByUpcomingSessionId(upcomingSessionIdToRemove);
   }
 
-  private java.sql.Date todaysDate() {
+  private java.sql.Date getUpcomingDate(DayOfWeek dayOfWeek) {
     LocalDate today = LocalDate.now();
-    return java.sql.Date.valueOf(today);
+    LocalDate targetDate;
+
+    switch (dayOfWeek) {
+      case SATURDAY:
+        // Get next Friday relative to today
+        targetDate = today.with(TemporalAdjusters.next(DayOfWeek.FRIDAY));
+        break;
+      case WEDNESDAY:
+        // Get next Sunday relative to today
+        targetDate = today.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+        break;
+      default:
+        // Throw exception for unsupported DayOfWeek
+        throw new IllegalArgumentException("Unsupported DayOfWeek: " + dayOfWeek);
+    }
+
+    return java.sql.Date.valueOf(targetDate);
   }
 }
