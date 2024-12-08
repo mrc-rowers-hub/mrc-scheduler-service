@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/standard_sessions")
 @RestController
 @Slf4j
-public class SessionController {
+public class SessionController { // generic sessions, not actual sessions
 
   @Autowired private SessionsService sessionsService;
 
