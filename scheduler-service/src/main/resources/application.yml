@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/rowers_hub?createDatabaseIfNotExist=true
+    url: ${ROWERS_HUB_DB_URL:jdbc:mysql://localhost:3306/rowers_hub?createDatabaseIfNotExist=true}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: password
