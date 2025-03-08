@@ -5,8 +5,8 @@ spring:
   datasource:
     url: ${ROWERS_HUB_DB_URL:jdbc:mysql://localhost:3306/rowers_hub?createDatabaseIfNotExist=true}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: password
+    username: ${DB_USERNAME:admin}
+    password: ${DB_PASSWORD:password123}
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -15,3 +15,4 @@ spring:
       temp:
         use_jdbc_metadata_defaults: false
       dialect: org.hibernate.dialect.MySQLDialect
+
