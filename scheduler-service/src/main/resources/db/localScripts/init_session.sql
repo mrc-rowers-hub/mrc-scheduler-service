@@ -36,13 +36,13 @@ SELECT
             CURDATE(),
             INTERVAL
         (7 + WEEKDAY(CASE s.day
-                WHEN 'MONDAY' THEN '2024-01-01'
-                WHEN 'TUESDAY' THEN '2024-01-02'
-                WHEN 'WEDNESDAY' THEN '2024-01-03'
-                WHEN 'THURSDAY' THEN '2024-01-04'
-                WHEN 'FRIDAY' THEN '2024-01-05'
-                WHEN 'SATURDAY' THEN '2024-01-06'
-                WHEN 'SUNDAY' THEN '2024-01-07'
+                WHEN 'MONDAY' THEN '2026-01-01'
+                WHEN 'TUESDAY' THEN '2026-01-02'
+                WHEN 'WEDNESDAY' THEN '2026-01-03'
+                WHEN 'THURSDAY' THEN '2026-01-04'
+                WHEN 'FRIDAY' THEN '2026-01-05'
+                WHEN 'SATURDAY' THEN '2026-01-06'
+                WHEN 'SUNDAY' THEN '2026-01-07'
             END) - WEEKDAY(CURDATE())) % 7 + (i*7) DAY
     ) AS next_date
 FROM
@@ -54,13 +54,13 @@ WHERE
             CURDATE(),
             INTERVAL
         (7 + WEEKDAY(CASE s.day
-                WHEN 'MONDAY' THEN '2024-01-01'
-                WHEN 'TUESDAY' THEN '2024-01-02'
-                WHEN 'WEDNESDAY' THEN '2024-01-03'
-                WHEN 'THURSDAY' THEN '2024-01-04'
-                WHEN 'FRIDAY' THEN '2024-01-05'
-                WHEN 'SATURDAY' THEN '2024-01-06'
-                WHEN 'SUNDAY' THEN '2024-01-07'
+                WHEN 'MONDAY' THEN '2026-01-01'
+                WHEN 'TUESDAY' THEN '2026-01-02'
+                WHEN 'WEDNESDAY' THEN '2026-01-03'
+                WHEN 'THURSDAY' THEN '2026-01-04'
+                WHEN 'FRIDAY' THEN '2026-01-05'
+                WHEN 'SATURDAY' THEN '2026-01-06'
+                WHEN 'SUNDAY' THEN '2026-01-07'
             END) - WEEKDAY(CURDATE())) % 7 + (i*7) DAY
     ) > CURDATE()
 ORDER BY
@@ -83,9 +83,14 @@ INSERT INTO past_sessions
 (upcoming_session_id, session_id, date)
 VALUES
     (1, 1, '2024-01-01'),
-    (2, 2, '2024-01-02'),
-    (4, 2, '2025-01-02'),
-    (3, 2, '2024-11-11');
+    (2, 1, '2025-06-06'),
+    (3, 1, '2025-06-06'),
+    (4, 1, '2025-06-06'),
+    (5, 1, '2025-01-06'),
+    (6, 1, '2025-06-06'),
+    (7, 2, '2025-06-06'),
+    (8, 2, '2025-01-02'),
+    (9, 2, '2024-11-11');
 
 INSERT INTO past_session_availability
 (upcoming_session_id, rower_id)
